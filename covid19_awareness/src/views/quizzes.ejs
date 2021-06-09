@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>
+    Covid 19 awareness
+  </title>
+
+
+<body>
+  <div class="wrapper" >
+    <div class="quizzes">
+      <div style="background-image: url('image.jpg');">
+      <p class = "leading-tight"><%- quizzes[0].title %></p>
+      <p class =  "pt-1 leading-snug">
+        <%- quizzes[0].description %>
+      </p>
+      <div>
+        <a href='/:title' class="button">Take the Quizz</a>
+      </div>
+      <h2 class = "leading-tight"><%- quizzes[1].title %></h2>
+      <p class =  "pt-1 leading-snug">
+        <%- quizzes[1].description %>
+      </p>
+      <div class="/:title">
+        <a href='/:title' class="button">Take the Quizz</a>
+      </div>
+      <h3 class = "leading-tight"><%- quizzes[2].title %></h3>
+      <p class =  "pt-1 leading-snug">
+        <%- quizzes[2].description %>
+      </p>
+      <div class="/:title">
+        <a href='/:title' class="button">Take the Quizz</a>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>

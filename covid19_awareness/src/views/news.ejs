@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid 19 News</title> 
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header__logo">Covid 19 News</div>
+        <%- include('./partials/search.ejs') %>
+    </header>
+    <title>Convert JSON Data to HTML Table</title>
+    <style>
+        th, td, p, input {
+            font:14px Verdana;
+        }
+        table, th, td 
+        {
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+        th {
+            font-weight:bold;
+        }
+    </style>
+    <div class="wrapper">
+        <div class="news">
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script type="text/javascript">
+             //document.write("lololo")
+              data = JSON.stringify(<%- article %>)
+             //document.write(data)
+             data = JSON.parse(data)
+             //document.write("123")
+            var keys = [];
+
+            document.write("<table border==\"1\"><tr>");
+            document.write("<th>Title</th><th>Description</th><th>Original Link</th></tr>")
+            for (i =0; i< data.items.length; i++)
+            {
+                //console.log(data.items[i])
+                document.write("<tr>");
+                var test = data.items[i]
+                document.write('<td ><a href="'+'/article/covid19'+'">'+test['title']+'</a></td>');
+                document.write('<td>' + test['description'] + '</td>');
+                document.write('<td>' + test['link'] + '</td>');
+                document.write("</tr>");
+
+            }
+            document.write("</table>");
+        
+            // for (key in data[0]) {
+            //     document.write('<td>' + key + '</td>');
+            //     }
+            //     document.write("</tr>");
+            //     for (var i = 0; i < data.length; i++) {
+            //         document.write('<tr>');
+            //         for (key in data[i]) {
+            //         document.write('<td>' + data[i][key] + '</td>');
+            //       }
+            //         document.write('</tr>');
+            //     }
+            //     document.write("</table>");
+                </script>
+        </div>
+    </div>
+</body>
+
+
+
+</html>
