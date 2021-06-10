@@ -1,0 +1,241 @@
+<!DOCTYPE html>  
+   
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">  
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid 19 Statistic</title> 
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+</head>  
+<body>  
+	<header class="header">
+        <div class="header__logo">Covid 19 Awareness</div>
+    </header>
+    <title>Covid 19 News</title>
+    <style>
+        th, td, p, input {
+            font:14px Verdana;
+        }
+        table, th, td 
+        {
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+        th {
+            font-weight:bold;
+        }
+    </style>
+	<div class="wrapper">
+        <div class="statistic">
+        <a href="/">&larr;- Back</a>
+        <p> Cumulative Covid 19 cases </p> 
+        	<% var temp = JSON.stringify(statistic) %>
+        	<% var check = JSON.parse(statistic) %>
+        	<% var cumulative_cases = [] %>
+        	<% var date = [] %>
+        	<% var dateCount =[] %>
+        	<% count = 0 %>
+        	<% for (i in check) { %>
+        	<%	cumulative_cases[i] = check[i].cumulative_cases %>
+        	<% dateCount[i] = count %>
+        	<% date[i] = check[i].date_report %>
+        	<% count++ %>
+        	<% } %>
+        	<% console.log(cumulative_cases[0]) %>
+        	<% console.log(date[1]) %>
+		  <canvas id="myCanvas" width="1500" height="600" style="border: 1px solid black;"></canvas>  
+		</div>
+	</div>
+   
+</body> 
+<script>  
+		var temp = "<%= cumulative_cases %>"
+		var cases = temp.split(",");
+		var temp1 = "<%= dateCount %>"
+		var temp2 = "<%= date %>"
+		var date_report = temp1.split(",");
+		var label1 = temp2.split(",");
+		// for(i =0; i<cases.length; i++)
+		// {
+		// 	cases[i] = cases[i] - '0'
+		// 	date[i] = date[i] - '0'
+		var count = cases.length -1 
+		document.write("<p>Case report today:"+ cases[count] + "</p>")  
+
+		// }
+    	function LineChart(con) {  
+            // user defined properties  
+            this.canvas = document.getElementById(con.canvasId);  
+            this.minX = con.minX;  
+            this.minY = con.minY;  
+            this.maxX = con.maxX;  
+            this.maxY = con.maxY;  
+            this.unitsPerTickX = con.unitsPerTickX;  
+            this.unitsPerTickY = con.unitsPerTickY;  
+   
+            // constants  
+            this.padding = 10;  
+            this.tickSize = 10;  
+            this.axisColor = "#555";  
+            this.pointRadius = 5;  
+            this.font = "12pt Calibri";  
+   
+            this.fontHeight = 12;  
+   
+            // relationships       
+            this.context = this.canvas.getContext("2d");  
+            this.rangeX = this.maxX - this.minY;  
+            this.rangeY = this.maxY - this.minY;  
+            this.numXTicks = Math.round(this.rangeX / this.unitsPerTickX);  
+            this.numYTicks = Math.round(this.rangeY / this.unitsPerTickY);  
+            this.x = this.getLongestValueWidth() + this.padding * 2;  
+            this.y = this.padding * 2;  
+            this.width = this.canvas.width - this.x - this.padding * 2;  
+            this.height = this.canvas.height - this.y - this.padding - this.fontHeight;  
+            this.scaleX = this.width / this.rangeX;  
+            this.scaleY = this.height / this.rangeY;  
+   
+            // draw x y axis and tick marks  
+            this.drawXAxis();  
+            this.drawYAxis();  
+        }  
+   
+        LineChart.prototype.getLongestValueWidth = function () {  
+            this.context.font = this.font;  
+            var longestValueWidth = 0;  
+            for (var n = 0; n <= this.numYTicks; n++) {  
+                var value = this.maxY - (n * this.unitsPerTickY);  
+                longestValueWidth = Math.max(longestValueWidth, this.context.measureText(value).width);  
+            }  
+            return longestValueWidth;  
+        };  
+   
+        LineChart.prototype.drawXAxis = function () {  
+            var context = this.context;  
+            context.save();  
+            context.beginPath();  
+            context.moveTo(this.x, this.y + this.height);  
+            context.lineTo(this.x + this.width, this.y + this.height);  
+            context.strokeStyle = this.axisColor;  
+            context.lineWidth = 2;  
+            context.stroke();  
+   
+            // draw tick marks  
+            for (var n = 0; n < this.numXTicks; n++) {  
+                context.beginPath();  
+                context.moveTo((n + 1) * this.width / this.numXTicks + this.x, this.y + this.height);  
+                context.lineTo((n + 1) * this.width / this.numXTicks + this.x, this.y + this.height - this.tickSize);  
+                context.stroke();  
+            }  
+   
+            // draw labels  
+            context.font = this.font;  
+            context.fillStyle = "black";  
+            context.textAlign = "center";  
+            context.textBaseline = "middle";  
+   
+            for (var n = 0; n < this.numXTicks; n++) {  
+            	var date = label1[n].split("-")
+                var label = date[0]+"/"+date[1] 
+                context.save();  
+                context.translate((n + 1) * this.width / this.numXTicks + this.x, this.y + this.height + this.padding);  
+                context.fillText(label, 0, 0);  
+                context.restore();  
+            }  
+            context.restore();  
+        };  
+   
+        LineChart.prototype.drawYAxis = function () {  
+            var context = this.context;  
+            context.save();  
+            context.save();  
+            context.beginPath();  
+            context.moveTo(this.x, this.y);  
+            context.lineTo(this.x, this.y + this.height);  
+            context.strokeStyle = this.axisColor;  
+            context.lineWidth = 2;  
+            context.stroke();  
+            context.restore();  
+   
+            // draw tick marks  
+            for (var n = 0; n < this.numYTicks; n++) {  
+                context.beginPath();  
+                context.moveTo(this.x, n * this.height / this.numYTicks + this.y);  
+                context.lineTo(this.x + this.tickSize, n * this.height / this.numYTicks + this.y);  
+                context.stroke();  
+            }  
+   
+            // draw values  
+            context.font = this.font;  
+            context.fillStyle = "black";  
+            context.textAlign = "right";  
+            context.textBaseline = "middle";  
+   
+            for (var n = 0; n < this.numYTicks; n++) {  
+                var value = Math.round(this.maxY - n * this.maxY / this.numYTicks);  
+                context.save();  
+                context.translate(this.x - this.padding, n * this.height / this.numYTicks + this.y);  
+                context.fillText(value, 0, 0);  
+                context.restore();  
+            }  
+            context.restore();  
+        };  
+   
+        LineChart.prototype.drawLine = function (dataX, dataY, label, color, width) {  
+            var context = this.context;  
+            context.save();  
+            this.transformContext();  
+            context.lineWidth = width;  
+            context.strokeStyle = color;  
+            context.fillStyle = color;  
+            context.beginPath();  
+            context.moveTo(dataX * this.scaleX, dataY * this.scaleY);
+   
+            for (var n = 0; n < dataY.length; n++) {  
+                var pointX = dataX[n]; 
+                var pointY = dataY[n];
+                // draw segment  
+                context.lineTo(pointX * this.scaleX, pointY * this.scaleY);  
+                context.stroke();  
+                context.closePath();  
+                context.beginPath();  
+                context.arc(pointX * this.scaleX, pointY * this.scaleY, this.pointRadius, 0, 2 * Math.PI, false);  
+                context.fill();  
+                context.closePath();  
+   
+                // position for next segment  
+                context.beginPath();  
+                context.moveTo(pointX * this.scaleX, pointY * this.scaleY);  
+            }  
+            context.restore();  
+        };  
+   
+        LineChart.prototype.transformContext = function () {  
+            var context = this.context;  
+   
+            // move context to center of canvas  
+            this.context.translate(this.x, this.y + this.height);  
+   
+            // invert the y scale so that that increments  
+            // as you move upwards  
+            context.scale(1, -1);  
+        };  
+   
+        window.onload = function () {  
+            var myLineChart = new LineChart({  
+                canvasId: "myCanvas",  
+                minX: 0,  
+                minY: 0,  
+                maxX: 32,  
+                maxY: 50000,  
+                unitsPerTickX: 1,  
+                unitsPerTickY: 5000  
+            });  
+            myLineChart.drawLine(date_report, cases, label1, "blue", 3);
+   
+        };  
+    </script>   
+</html> 

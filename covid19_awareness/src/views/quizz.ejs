@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid 19 News</title> 
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+</head>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+    <header class="header">
+        <div class="header__logo">Covid 19 Awareness</div>
+    </header>
+    <title>Convert JSON Data to HTML Table</title>
+    <style>
+        th, td, p, input {
+            font:14px Verdana;
+        }
+        table, th, td 
+        {
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+        th {
+            font-weight:bold;
+        }
+        .button {
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          background: blue;
+        }
+    </style>
+    <div class="wrapper">
+        <div class="quizz">
+            <a href="/">&larr;- Back</a>
+            <div class="w3-container">
+            <% data1 = JSON.parse(quizzes) %>
+            <% i = quesID-'0' %>
+            <%if( title == "safe"){ %>
+                <div id ="question">
+                    <% question0 = data1[0].questions[i] %>
+                    <div class="w3-panel w3-blue">
+                        <p><%= question0.title %></p>
+                        <% answer = question0.answers %>
+                        </div>
+                        <div>
+                        <p>
+                        <% option0 = JSON.stringify(answer[0]) %>
+                        <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" id = "btn" onclick="handleEvent(0)"><%= answer[0].option %></button>
+                        </p>
+                        <p>
+                        <% option1 = JSON.stringify(answer[1]) %>
+                        <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" id = "btn" onclick="handleEvent(1)"><%= answer[1].option %> </button>
+                        </p>
+
+                    </div>
+                </div>
+
+                    <div style="display:none" id="answer0">
+                        <% test = JSON.parse(option0) %>
+                        <p>That is <%= test.correctAnswer %> answer</p>
+                        <p><%= test.title %></p>
+                        <blockquote> <p><%= test.description %> </p> 
+                            <% if (test.youtubeUrl != undefined) { %>
+                                <p> For more information: </p>
+                                <iframe width="560" height="315" src="<%= test.youtubeUrl %>" frameborder="0" allowfullscreen></iframe>
+                            <% } %>
+                            <% if (test.imageUrl != undefined) { %>
+                                <p> For more information: </p>
+                                <img src="<%= test.imageUrl %>" width="512" height="577" style="float:right">
+                            <% } %>
+                            <% i++ %>
+                            <% if (i < data1[0].questions.length ) { %>
+                                <a href="/quizzes/<%= title %>/0<%= i %>">Next question</a>
+                            <% } else { %>
+                            <p> Thank you for taking this quiz </p>
+                            <a href="/quizzes">Choose another quiz</a>
+                            <% } %>
+                        </blockquote>
+                    </div>
+
+                    <div style="display:none" id="answer1">
+                        <% test = JSON.parse(option1) %>
+                        <p>That is <%= test.correctAnswer %> answer</p>
+                        <p><%= test.title %></p>
+                        <blockquote> <p><%= test.description %> </p> 
+                            <p> For more information: </p>
+                            <iframe width="560" height="315" src="<%= test.youtubeUrl %>" frameborder="0" allowfullscreen></iframe>
+                            <% i++ %>
+                            <% if (i < data1[0].questions.length ) { %>
+                                <a href="/quizzes/<%= title %>/0<%= i %>">Next question</a>
+                            <% } else { %>
+                            <p> Thank you for taking this quiz </p>
+                            <a href="/quizzes">Choose another quiz</a>
+                            <% } %>
+                        </blockquote>
+                    </div>   
+                     
+            <% } %>
+
+            </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script type="text/javascript">
+                function handleEvent(option) {
+                    option = JSON.stringify(option)
+                    if(option == '0')
+                    {
+                        var x = document.getElementById("answer0");
+                        var y = document.getElementById("answer1");
+                        if(y.style.display === "block") {
+                            y.style.display = "none";
+                        }
+                        if (x.style.display === "none") {
+                             x.style.display = "block";
+                        } 
+
+                  }
+                  else if(option == '1')
+                    {
+                        var x = document.getElementById("answer1");
+                        var y = document.getElementById("answer0");
+                        if(y.style.display === "block") {
+                            y.style.display = "none";
+                        }
+                        if (x.style.display === "none") {
+                             x.style.display = "block";
+                        } 
+                }
+                else
+                    {
+                        document.write("false")
+                    }
+                    var count = 1
+                    var property = document.getElementById("btn");
+                    if (count == 0) {
+                        property.style.backgroundColor = "#FFFFFF"
+                        count = 1;        
+                    }
+                    else {
+                        property.style.backgroundColor = "#7FFF00"
+                        count = 0;
+                    }
+            }
+            function functionTest(check)
+            {
+                check = check + 1;
+                var myElement = document.getElementById("question");
+                document.getElementById("nextQues").innerHTML = myElement.innerHTML;
+                return (check);
+
+            }
+
+                </script>
+        </div>
+    </div>
+</body>
+
+
+
+</html>

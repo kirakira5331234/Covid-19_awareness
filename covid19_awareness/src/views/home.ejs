@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Covid 19 awareness</title>
     <link rel="stylesheet" href="/css/styles.css">
     <style>
@@ -24,20 +23,24 @@
 	div {
   		background-image: url('image.png');
 	}
+	label:after {
+   content: "Choose your location:";
+   color: white;
+	}
 
 </style>
 </head>
-<body background="image.png">
+<body background="/img/image.jpg">
 	<div style="background-image: url('image.png');">
 	    <header class="header">
 	    	<a href='/article' class="button">Covid 19 News</a>
 	    	<a href='/quizzes' class="button">Quizz Game</a>
-	    	<button type="button">Statistics</button>
+	    	<a href='/statistic' class="button">Statistic</a>
 	    	<a href='/about' class="button">About</a>
 	    </header>
 
 	    <section id="wizard-p-12" role="tabpanel" aria-labelledby="wizard-h-12" aria-hidden="false">
-	    	<label for="location">Choose your location:</label>
+	    	<label for="location"> </label>
 	    	<select >
 	    		<option>Saskatchewan</option>
 	    		<option>Alberta</option>

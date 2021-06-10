@@ -22,12 +22,14 @@ const newsRouter = require('./src/routes/news')
 const Home = require('./src/routes/home')
 const quizz = require('./src/routes/quizz')
 const about = require('./src/routes/about')
+const graph = require('./src/routes/statistic')
 
 app.use('/', Home)
 app.use('/article', newsRouter)
 app.use('/article/covid19', newsSingle)
 app.use('/quizzes', quizz)
 app.use('/about', about)
+app.use('/statistic', graph)
 
 // Listen on port 5000
 app.listen(port, () => console.log(`Listening on port ${port}`))

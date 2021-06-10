@@ -15,6 +15,7 @@ quizzRoute.get('', async (req, res) => {
     try {
         console.log("File data:", quizes.quiz[0].title);
         res.statusCode = 200;
+        console.log(req.query)
         res.render('quizzes', {quizzes: quizes['quiz']})
     } catch (err) {
         if(err.response) {
@@ -35,22 +36,24 @@ quizzRoute.get('', async (req, res) => {
 
 
 // get one quiz question
-quizzRoute.get('/:title', async(req, res) => {
-    let questionTT = req.params.title
-    console.log(req.params.title)
+quizzRoute.get('/:name/:id', async(req, res) => {
+    let questionTT = req.params.name
+    let questionID = req.params.id
+    questions = JSON.stringify(quizes['quiz'])
+    console.log(questionTT)
     try {
-        res.render('question', { quizz : req.params.title })
+        res.render('quizz', { quizzes : questions, title: questionTT, quesID: questionID })
     } catch (err) {
         if(err.response) {
-            res.render('question', { quizz : null })
+            res.render('quizz', { quizz : null })
             console.log(err.response.data)
             console.log(err.response.status)
             console.log(err.response.headers)
         } else if(err.requiest) {
-            res.render('question', { quizz : null })
+            res.render('quizz', { quizz : null })
             console.log(err.requiest)
         } else {
-            res.render('question', { quizz : null })
+            res.render('quizz', { quizz : null })
             console.error('Error', err.message)
         }
     } 
