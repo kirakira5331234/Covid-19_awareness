@@ -5,6 +5,11 @@
     <title>Covid 19 awareness</title>
     <link rel="stylesheet" href="/css/styles.css">
     <style>
+    .header_special {
+	  color: #fff;
+	  background-color: #10555A;
+	  margin-bottom: 10px;
+	}
 	.button {
   	  border: none;
 	  color: white;
@@ -20,35 +25,65 @@
 	  color: black;
 	  border: 2px solid #4CAF50;
 	}
-	div {
-  		background-image: url('image.png');
+	.alignRight {
+    	text-align: right;
 	}
 	label:after {
    content: "Choose your location:";
-   color: white;
+   color: black;
 	}
 
 </style>
 </head>
-<body background="/img/image.jpg">
+<body>
 	<div style="background-image: url('image.png');">
-	    <header class="header">
+
+	    <header class="header_special">
+	    	<div>
+		    	<form action="/login" method="post">
+				  	Username( Using for administrator): 
+				  	<input type="text" name="username" placeholder="Username" required> 
+				  	Password: 
+				  	<input type="password" name="password" placeholder="Password" required>
+				  	<input type="submit" value="login">
+				</form>
+			<% if (title != null) {%>
+					<p style="text-align: right;"><%= title %></p>
+				<% } %>
+	    	</div>
+	    </header>
+	    <div class= "main_button">
 	    	<a href='/article' class="button">Covid 19 News</a>
 	    	<a href='/quizzes' class="button">Quizz Game</a>
 	    	<a href='/statistic' class="button">Statistic</a>
 	    	<a href='/about' class="button">About</a>
-	    </header>
+	    </div>
 
-	    <section id="wizard-p-12" role="tabpanel" aria-labelledby="wizard-h-12" aria-hidden="false">
-	    	<label for="location"> </label>
-	    	<select >
-	    		<option>Saskatchewan</option>
-	    		<option>Alberta</option>
-	    		<option>Manitoba</option>
-	    		<option>Quebec</option>
-	    		<option>New Brunwick</option>
-	    		<option>Yukon</option>
-			</select>
-	    </section>
+	    <table style="width:1500px" border="0">
+            <tr>
+            	<td style="vertical-align:top;">
+			    <form class="form"  action="/" method="post"> 
+			    	<section id="wizard-p-12" role="tabpanel" aria-labelledby="wizard-h-12" aria-hidden="false">
+					    <label for="location1"> </label>
+					    	<select name="location1">
+							    <option value="SK">Saskatchewan</option>
+							    <option value="AB">Alberta</option>
+							    <option value="MB">Manitoba</option>
+							    <option value="QC">Quebec</option>
+							    <option value="NB">New Brunwick</option>
+							    <option value="YT">Yukon</option>
+							    <option value="BC">British Columbia</option>
+							    <option value="ON">Ontario</option>
+							</select>
+					    <button id='submit' type='submit'name ='register' onclick="form.action='/'">Set Location</button>
+
+					</section>
+					</form>
+				</td >
+				 <td style="text-align:right;"><img src="/img/Political_map_of_Canada.svg.png" alt="" border=3 height=550 width=800></img></td>
+				</tr>
+			</table>
+
+	    
 	</div>
 </body>

@@ -27,33 +27,82 @@
         th {
             font-weight:bold;
         }
+        label:after {
+	   content: "Choose your location:";
+	   color: black;
+		}
     </style>
+    <form class="form"  action="/statistic" method="post"> 
+    	<section id="wizard-p-12" role="tabpanel" aria-labelledby="wizard-h-12" aria-hidden="false">
+		    <label for="location"> </label>
+		    	<select name="location">
+				    <option value="SK">Saskatchewan</option>
+				    <option value="AB">Alberta</option>
+				    <option value="MB">Manitoba</option>
+				    <option value="QC">Quebec</option>
+				    <option value="NB">New Brunwick</option>
+				    <option value="YT">Yukon</option>
+				    <option value="BC">British Columbia</option>
+				    <option value="ON">Ontario</option>
+				</select>
+		    <button id='submit' type='submit'name ='register' onclick="form.action='/statistic'">Set Location</button>
+
+		</section>
+	</form>
 	<div class="wrapper">
         <div class="statistic">
         <a href="/">&larr;- Back</a>
-        <p> Cumulative Covid 19 cases </p> 
+        <div>
+	        
+		</div>
+        <p> Cumulative Covid 19 cases of <%= state %></p> 
         	<% var temp = JSON.stringify(statistic) %>
         	<% var check = JSON.parse(statistic) %>
+            <% console.log(death_cases) %>
+            <% var check1 = JSON.parse(death_cases) %>
+            <% var check2 = JSON.parse(recovered_cases) %>
         	<% var cumulative_cases = [] %>
+            <% var negative_cases = [] %>
+            <% var positive = [] %>
+            <% var death = [] %>
         	<% var date = [] %>
         	<% var dateCount =[] %>
         	<% count = 0 %>
         	<% for (i in check) { %>
-        	<%	cumulative_cases[i] = check[i].cumulative_cases %>
-        	<% dateCount[i] = count %>
-        	<% date[i] = check[i].date_report %>
-        	<% count++ %>
+            	<%	cumulative_cases[i] = check[i].cumulative_cases %>
+                <%  negative_cases[i]  = check[i].cases %>
+                <% death[i] = check1[i].cumulative_deaths %>
+                <% positive[i] = check2[i].cumulative_recovered %>
+            	<% dateCount[i] = count %>
+            	<% date[i] = check[i].date_report %>
+            	<% count++ %>
         	<% } %>
-        	<% console.log(cumulative_cases[0]) %>
+        	<% console.log(negative_cases[0]) %>
         	<% console.log(date[1]) %>
-		  <canvas id="myCanvas" width="1500" height="600" style="border: 1px solid black;"></canvas>  
+            <table style="width:1500px" border="0">
+                <tr>
+		          <td style="text-align:left;"><canvas id="myCanvas" width="800" height="600" style="border: 1px solid black;"></canvas></td>
+                  <td style="text-align:right;"><p>Cumulative cases:</p><hr style="width:20%; border-color: blue; border-width: 2px;">
+                    <p>Recovered cases:</p><hr style="width:20%; border-color: yellow;">
+                    <p>Motality cases:</p><hr style="width:20%; border-color: black;">
+                    <p>Current negative cases:</p><hr style="width:20%; border-color: red;">
+                    <img src="/img/Political_map_of_Canada.svg.png" alt="" border=3 height=400 width=700></img>
+                </td>
+
 		</div>
 	</div>
    
 </body> 
 <script>  
+		var test = 50000
 		var temp = "<%= cumulative_cases %>"
+        var temp3 = "<%= negative_cases %>"
+        var temp4 = "<%= death %>"
+        var temp5 = "<%= positive %>"
 		var cases = temp.split(",");
+        var negative_case = temp3.split(",");
+        var death = temp4.split(",");
+        var positive = temp5.split(",");
 		var temp1 = "<%= dateCount %>"
 		var temp2 = "<%= date %>"
 		var date_report = temp1.split(",");
@@ -63,7 +112,7 @@
 		// 	cases[i] = cases[i] - '0'
 		// 	date[i] = date[i] - '0'
 		var count = cases.length -1 
-		document.write("<p>Case report today:"+ cases[count] + "</p>")  
+		document.write("<p>Case report today:"+ negative_case[count] + "</p>")  
 
 		// }
     	function LineChart(con) {  
@@ -81,9 +130,9 @@
             this.tickSize = 10;  
             this.axisColor = "#555";  
             this.pointRadius = 5;  
-            this.font = "12pt Calibri";  
+            this.font = "10pt Calibri";  
    
-            this.fontHeight = 12;  
+            this.fontHeight = 10;  
    
             // relationships       
             this.context = this.canvas.getContext("2d");  
@@ -132,7 +181,7 @@
             }  
    
             // draw labels  
-            context.font = this.font;  
+            context.font = "7pt Calibri";  
             context.fillStyle = "black";  
             context.textAlign = "center";  
             context.textBaseline = "middle";  
@@ -225,17 +274,90 @@
         };  
    
         window.onload = function () {  
+        	var	length = parseInt(cases[count], 10)
+        	if(length > 500000)
+        	{
+        		var max = 1000000
+        	}
+        	else if(length> 40000 && length < 50000)
+        	{
+        		var max = 50000
+        	}
+        	else if(length> 50000 && length < 100000)
+        	{
+        		var max = 100000
+        	}
+        	else if( length > 100000 && length < 200000)
+        	{
+        		var max = 200000
+        	}
+            else if( length > 200000 && length < 300000)
+            {
+                var max = 300000
+            }
+            else if( length > 300000 && length < 400000)
+            {
+                var max = 400000
+            }
+            else if( length > 400000 && length < 500000)
+            {
+                var max = 500000
+            }
+        	else
+        	{
+        		max = 40000
+        	}
+        	if(max > 500000)
+        	{
+        		var unit = 50000
+        	}
+        	else if(max>= 40000 && max < 50000)
+            {
+                var unit = 50000
+            }
+            else if(max>= 50000 && max < 100000)
+            {
+                var unit = 5000
+            }
+            else if( max >= 100000 && max < 200000)
+            {
+                var unit = 10000
+            }
+            else if( max >= 200000 && max < 300000)
+            {
+                var unit = 10000
+            }
+            else if( max >= 300000 && max < 400000)
+            {
+                var unit = 15000
+            }
+            else if( max >= 400000 && max < 500000)
+            {
+                var unit = 50000
+            }
+        	else if(max>= 20000 && max < 40000)
+        	{
+        		var unit = 2000
+        	}
+        	else
+        	{
+        		var unit = 1000
+        	}
             var myLineChart = new LineChart({  
                 canvasId: "myCanvas",  
                 minX: 0,  
                 minY: 0,  
                 maxX: 32,  
-                maxY: 50000,  
+                maxY: max,  
                 unitsPerTickX: 1,  
-                unitsPerTickY: 5000  
+                unitsPerTickY: unit  
             });  
             myLineChart.drawLine(date_report, cases, label1, "blue", 3);
+            myLineChart.drawLine(date_report, negative_case, label1, "red", 3);
+            myLineChart.drawLine(date_report, death, label1, "black", 3);
+            myLineChart.drawLine(date_report, positive, label1, "yellow", 3);
    
         };  
+
     </script>   
 </html> 

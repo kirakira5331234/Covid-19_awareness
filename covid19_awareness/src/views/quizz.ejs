@@ -12,7 +12,7 @@
     <header class="header">
         <div class="header__logo">Covid 19 Awareness</div>
     </header>
-    <title>Convert JSON Data to HTML Table</title>
+    <title>Covid 19 Quizz</title>
     <style>
         th, td, p, input {
             font:14px Verdana;
@@ -42,70 +42,149 @@
         <div class="quizz">
             <a href="/">&larr;- Back</a>
             <div class="w3-container">
-            <% data1 = JSON.parse(quizzes) %>
-            <% i = quesID-'0' %>
-            <%if( title == "safe"){ %>
-                <div id ="question">
-                    <% question0 = data1[0].questions[i] %>
-                    <div class="w3-panel w3-blue">
-                        <p><%= question0.title %></p>
-                        <% answer = question0.answers %>
+            <% if( quizID != null) {%>
+                <% data1 = JSON.parse(quizzes) %>
+                <% i = quesID-'0' %>
+                <% var number = parseInt(quizID) %>
+                <%console.log(data1[number].question) %>
+                    <div id ="question">
+                        <% question0 = data1[number].question %>
+                        <div class="w3-panel w3-blue">
+                            <p><%= question0.title %></p>
+                            <% answer = question0.answers %>
+                            </div>
+                            <div>
+                            <p>
+                            <% option0 = JSON.stringify(answer[0]) %>
+                            <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" id = "btn" onclick="handleEvent(0)"><%= answer[0].option %></button>
+                            </p>
+                            <p>
+                            <% option1 = JSON.stringify(answer[1]) %>
+                            <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" id = "btn" onclick="handleEvent(1)"><%= answer[1].option %> </button>
+                            </p>
+
                         </div>
-                        <div>
-                        <p>
-                        <% option0 = JSON.stringify(answer[0]) %>
-                        <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" id = "btn" onclick="handleEvent(0)"><%= answer[0].option %></button>
-                        </p>
-                        <p>
-                        <% option1 = JSON.stringify(answer[1]) %>
-                        <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" id = "btn" onclick="handleEvent(1)"><%= answer[1].option %> </button>
-                        </p>
-
-                    </div>
-                </div>
-
-                    <div style="display:none" id="answer0">
-                        <% test = JSON.parse(option0) %>
-                        <p>That is <%= test.correctAnswer %> answer</p>
-                        <p><%= test.title %></p>
-                        <blockquote> <p><%= test.description %> </p> 
-                            <% if (test.youtubeUrl != undefined) { %>
-                                <p> For more information: </p>
-                                <iframe width="560" height="315" src="<%= test.youtubeUrl %>" frameborder="0" allowfullscreen></iframe>
-                            <% } %>
-                            <% if (test.imageUrl != undefined) { %>
-                                <p> For more information: </p>
-                                <img src="<%= test.imageUrl %>" width="512" height="577" style="float:right">
-                            <% } %>
-                            <% i++ %>
-                            <% if (i < data1[0].questions.length ) { %>
-                                <a href="/quizzes/<%= title %>/0<%= i %>">Next question</a>
-                            <% } else { %>
-                            <p> Thank you for taking this quiz </p>
-                            <a href="/quizzes">Choose another quiz</a>
-                            <% } %>
-                        </blockquote>
                     </div>
 
-                    <div style="display:none" id="answer1">
-                        <% test = JSON.parse(option1) %>
-                        <p>That is <%= test.correctAnswer %> answer</p>
-                        <p><%= test.title %></p>
-                        <blockquote> <p><%= test.description %> </p> 
-                            <p> For more information: </p>
-                            <iframe width="560" height="315" src="<%= test.youtubeUrl %>" frameborder="0" allowfullscreen></iframe>
-                            <% i++ %>
-                            <% if (i < data1[0].questions.length ) { %>
-                                <a href="/quizzes/<%= title %>/0<%= i %>">Next question</a>
-                            <% } else { %>
-                            <p> Thank you for taking this quiz </p>
-                            <a href="/quizzes">Choose another quiz</a>
-                            <% } %>
-                        </blockquote>
-                    </div>   
+                        <div style="display:none" id="answer0">
+                            <% test = JSON.parse(option0) %>
+                            <p>That is <%= test.correctAnswer %> answer</p>
+                            <p><%= test.title %></p>
+                            <blockquote> <p><%= test.description %> </p> 
+                                <% if (test.youtubeUrl != undefined) { %>
+                                    <p> For more information: </p>
+                                    <iframe width="560" height="315" src="<%= test.youtubeUrl %>" frameborder="0" allowfullscreen></iframe>
+                                <% } %>
+                                <% if (test.imageUrl != undefined) { %>
+                                    <p> For more information: </p>
+                                    <img src="<%= test.imageUrl %>" width="512" height="577" style="float:right">
+                                <% } %>
+                                <% i++ %>
+                                <% if (i < data1[number].question.length ) { %>
+                                    <a href="/quizzes/<%= title %>/<%= quizID %>/0<%= i %>">Next question</a>
+                                <% } else { %>
+                                <p> Thank you for taking this quiz </p>
+                                <a href="/quizzes">Choose another quiz</a>
+                                <% } %>
+                            </blockquote>
+                        </div>
+
+                        <div style="display:none" id="answer1">
+                            <% test = JSON.parse(option1) %>
+                            <p>That is <%= test.correctAnswer %> answer</p>
+                            <p><%= test.title %></p>
+                            <blockquote> <p><%= test.description %> </p> 
+                                <% if (test.youtubeUrl != undefined) { %>
+                                    <p> For more information: </p>
+                                    <iframe width="560" height="315" src="<%= test.youtubeUrl %>" frameborder="0" allowfullscreen></iframe>
+                                <% } %>
+                                <% if (test.imageUrl != undefined) { %>
+                                    <p> For more information: </p>
+                                    <img src="<%= test.imageUrl %>" width="512" height="577" style="float:right">
+                                <% } %>
+                                <% i++ %>
+                                <% if (i < data1[number].question.length ) { %>
+                                    <a href="/quizzes/<%= title %>/0<%= i %>">Next question</a>
+                                <% } else { %>
+                                <p> Thank you for taking this quiz </p>
+                                <a href="/quizzes">Choose another quiz</a>
+                                <% } %>
+                            </blockquote>
+                        </div>
+
+            <% } else {%>
+
+                <% data1 = JSON.parse(quizzes) %>
+                <%console.log(data1) %>
+                <% i = quesID-'0' %>
+                <% var number = parseInt(title) %>
+                <%console.log(number) %>
+                    <div id ="question">
+                        <% question0 = data1[number].questions[i] %>
+                        <div class="w3-panel w3-blue">
+                            <p><%= question0.title %></p>
+                            <% answer = question0.answers %>
+                            </div>
+                            <div>
+                            <p>
+                            <% option0 = JSON.stringify(answer[0]) %>
+                            <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" id = "btn" onclick="handleEvent(0)"><%= answer[0].option %></button>
+                            </p>
+                            <p>
+                            <% option1 = JSON.stringify(answer[1]) %>
+                            <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" id = "btn" onclick="handleEvent(1)"><%= answer[1].option %> </button>
+                            </p>
+
+                        </div>
+                    </div>
+
+                        <div style="display:none" id="answer0">
+                            <% test = JSON.parse(option0) %>
+                            <p>That is <%= test.correctAnswer %> answer</p>
+                            <p><%= test.title %></p>
+                            <blockquote> <p><%= test.description %> </p> 
+                                <% if (test.youtubeUrl != undefined) { %>
+                                    <p> For more information: </p>
+                                    <iframe width="560" height="315" src="<%= test.youtubeUrl %>" frameborder="0" allowfullscreen></iframe>
+                                <% } %>
+                                <% if (test.imageUrl != undefined) { %>
+                                    <p> For more information: </p>
+                                    <img src="<%= test.imageUrl %>" width="512" height="577" style="float:right">
+                                <% } %>
+                                <% i++ %>
+                                <% if (i < data1[number].questions.length ) { %>
+                                    <a href="/quizzes/<%= title %>/0<%= i %>">Next question</a>
+                                <% } else { %>
+                                <p> Thank you for taking this quiz </p>
+                                <a href="/quizzes">Choose another quiz</a>
+                                <% } %>
+                            </blockquote>
+                        </div>
+
+                        <div style="display:none" id="answer1">
+                            <% test = JSON.parse(option1) %>
+                            <p>That is <%= test.correctAnswer %> answer</p>
+                            <p><%= test.title %></p>
+                            <blockquote> <p><%= test.description %> </p> 
+                                <% if (test.youtubeUrl != undefined) { %>
+                                    <p> For more information: </p>
+                                    <iframe width="560" height="315" src="<%= test.youtubeUrl %>" frameborder="0" allowfullscreen></iframe>
+                                <% } %>
+                                <% if (test.imageUrl != undefined) { %>
+                                    <p> For more information: </p>
+                                    <img src="<%= test.imageUrl %>" width="512" height="577" style="float:right">
+                                <% } %>
+                                <% i++ %>
+                                <% if (i < data1[number].questions.length ) { %>
+                                    <a href="/quizzes/<%= title %>/0<%= i %>">Next question</a>
+                                <% } else { %>
+                                <p> Thank you for taking this quiz </p>
+                                <a href="/quizzes">Choose another quiz</a>
+                                <% } %>
+                            </blockquote>
+                        </div>
+                <% } %>   
                      
-            <% } %>
-
             </div>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

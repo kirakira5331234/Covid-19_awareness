@@ -1,5 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+var fs = require('fs');
+global.jsonObj = {}
+global.jsonObj = JSON.parse(fs.readFileSync('./src/data/addQues.json', 'utf8'));
 
 const app = express()
 const port = 5000

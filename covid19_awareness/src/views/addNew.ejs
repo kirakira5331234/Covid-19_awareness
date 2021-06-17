@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Covid 19 awareness</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+    .header_special {
+	  color: #fff;
+	  background-color: #10555A;
+	  margin-bottom: 10px;
+	}
+	.button {
+  	  border: none;
+	  color: white;
+	  padding: 16px 32px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 16px;
+	  margin: 4px 2px;
+	  transition-duration: 0.4s;
+	  cursor: pointer;
+	  background-color: white;
+	  color: black;
+	  border: 2px solid #4CAF50;
+	}
+	.alignRight {
+    	text-align: right;
+	}
+	.alignCenter {
+    	text-align: center;
+	}
+	.alignLeft {
+    	text-align: left;
+	}
+	label:after {
+   content: "Choose your location:";
+   color: white;
+	}
+
+</style>
+</head>
+<body>
+	<div style="background-color: #ADDDCE;">
+		<header class="header">
+        	<div class="header__logo">Covid 19 Awareness</div>
+    	</header>
+    	    <div>
+        		<a href="/">&larr;- Back</a>
+    		</div>
+	    	<div class="addNew">
+		    	<form action="/quizzes/addNew" class = "alignCenter" method="post">
+				  	Question Title: <br>
+				  	<input type="text" name="title" placeholder="Title" size = "80" required > <br> <br>
+				  	Question Description: <br>
+				  	<textarea name="description" rows="4" cols="50" >
+  						Description about Quiz Content.
+  					</textarea> <br><br>
+				  	Question path: <br>
+				  	<input type="text" name="path" placeholder="path" size = "80" required> <br><br>
+				  	Question: <br>
+				  	<input type="text" name="qTitle" placeholder="qTitle" size = "80" required> <br><br>
+				  	Option for yes: <br>
+				  	<input type="text" name="optionY" placeholder="optionY" size = "80" required> <br><br>
+				  	Title for yes: <br>
+				  	<input type="text" name="titleY" placeholder="titleY" size = "80" > <br><br>
+				  	Description for yes: <br>
+				  	<textarea name="descriptionY" rows="4" cols="50" >
+  						Description about Question Content.
+  					</textarea> <br><br>
+				  	Answer for yes: <br>
+				  	<input type="text" name="yes" placeholder="True or False" size = "80" required> <br><br>
+				  	Option for no: <br>
+				  	<input type="text" name="optionN" placeholder="optionN" size = "80" required> <br><br>
+				  	Title for no: <br>
+				  	<input type="text" name="titleN" placeholder="titleN" size = "80" required> <br><br>
+				  	Description for no: <br>
+				  	<textarea name="descriptionN" rows="4" cols="50" >
+  						Description about Question Content.
+  					</textarea> <br><br>
+				  	Answer for no: <br>
+				  	<input type="text" name="no" placeholder="True or False" size = "80" required> <br><br>
+				  	<input type="submit" class = "button" value="Add new quiz">
+				  	<div>
+	    				<a href='/quizzes' class="button">Done</a>
+	    			</div>
+				</form>
+	    	</div>
+	</div>
+</body>
+</html>
