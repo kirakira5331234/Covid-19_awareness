@@ -12,3 +12,12 @@ This Project focuses on the basic knowledge related to the global pandemic ( Sym
 Anyone who wants to seek information about the disease situation or assistance in the Covid-19 period
 In the current scope, this project just is suggested for the community in Regina City and supported English only.
 All knowledge and data of this Project can be collected from the official channel and research paper about Covid-19
+
+## Introduce about this product
+https://www.youtube.com/watch?v=yRZDcnnr3S0&t=47s
+
+## Set up environment
+npm install
+
+## Run project
+npm start
